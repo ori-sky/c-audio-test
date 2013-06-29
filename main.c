@@ -31,8 +31,7 @@ static int cb_gen_square(float * buffer, unsigned long frames, float frequency)
 static int callback(const void * input, void * output, unsigned long fpb, const PaStreamCallbackTimeInfo * time_info, PaStreamCallbackFlags flags, void * user_data)
 {
 	static float frequency = 261.625565f;
-	float * buffer = (float *)output;
-	return cb_gen_square(output, fpb, frequency += 0.01f);
+	return cb_gen_square((float *)output, fpb, frequency += 0.01f);
 }
 
 int main(int argc, char ** argv)
