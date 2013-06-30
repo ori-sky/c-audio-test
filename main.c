@@ -7,24 +7,24 @@
 #include "waveshape_sine.h"
 #include "config.h"
 
-static struct oscillator_s * osc1 = NULL;
+static struct oscillator_s *osc1 = NULL;
 
-static unsigned char assert_pa_error(PaError err, const char * msg)
+static unsigned char assert_pa_error(PaError err, const char *msg)
 {
 	fprintf(stderr, "%s [%s]\n", msg, (err == paNoError) ? "SUCCESS" : "FAILED");
 	return (err == paNoError);
 }
 
-static int callback(const void * input, void * output, unsigned long fpb, const PaStreamCallbackTimeInfo * time_info, PaStreamCallbackFlags flags, void * user_data)
+static int callback(const void *input, void *output, unsigned long fpb, const PaStreamCallbackTimeInfo *time_info, PaStreamCallbackFlags flags, void *user_data)
 {
 	return oscillator_cb(output, fpb, osc1);
 }
 
-int main(int argc, char ** argv)
+int main(int argc, char **argv)
 {
 	osc1 = oscillator_create(waveshape_sine_create(8192));
 
-	PaStream * stream;
+	PaStream *stream;
 
 	assert_pa_error(Pa_Initialize(), "initializing portaudio");
 	assert_pa_error(Pa_OpenDefaultStream(&stream, 0, 2, paFloat32, SAMPLE_RATE, FRAMES_PER_BUFFER, callback, NULL), "opening default stream");

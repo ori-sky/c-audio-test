@@ -4,16 +4,16 @@
 #include "oscillator.h"
 #include "config.h"
 
-struct oscillator_s * oscillator_create(struct waveshape_s * waveshape)
+struct oscillator_s *oscillator_create(struct waveshape_s *waveshape)
 {
-	struct oscillator_s * osc = malloc(sizeof(struct oscillator_s));
+	struct oscillator_s *osc = malloc(sizeof(struct oscillator_s));
 	osc->waveshape = waveshape;
 	osc->frequency = waveshape->preferred_frequency;
 	osc->position = 0;
 	return osc;
 }
 
-int oscillator_cb(float * buffer, unsigned long frames, struct oscillator_s * osc)
+int oscillator_cb(float *buffer, unsigned long frames, struct oscillator_s *osc)
 {
 	float increment = osc->frequency * osc->waveshape->size / SAMPLE_RATE;
 
