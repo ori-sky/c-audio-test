@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-c -Wall --std=c99
-LDFLAGS=-lasound -ljack -lportaudio -lm
+LDFLAGS=-lm -lrt -lpthread -lasound -ljack -lportaudio
 SOURCES=main.c oscillator.c waveshape_sine.c waveshape_wav.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=audio
