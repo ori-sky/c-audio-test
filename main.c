@@ -31,10 +31,11 @@
 #include <math.h>
 
 #include "portaudio.h"
+#include "config.h"
 #include "oscillator.h"
 #include "waveshape_sine.h"
 #include "waveshape_wav.h"
-#include "config.h"
+#include "waveshape_test.h"
 
 static struct oscillator_s *osc1 = NULL;
 
@@ -68,7 +69,8 @@ int main(int argc, char **argv)
 	}
 
 	//osc1 = oscillator_create(waveshape_sine_create(8192));
-	osc1 = oscillator_create(waveshape_wav_create(fp));
+	//osc1 = oscillator_create(waveshape_wav_create(fp));
+	osc1 = oscillator_create(waveshape_test_create());
 
 	PaStream *stream;
 
