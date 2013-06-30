@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 	assert_pa_error(Pa_OpenDefaultStream(&stream, 0, 2, paFloat32, SAMPLE_RATE, FRAMES_PER_BUFFER, callback, NULL), "opening default stream");
 	assert_pa_error(Pa_StartStream(stream), "starting stream");
 
-	for(;;);
+	fgetc(stdin);
 
 	assert_pa_error(Pa_Terminate(), "terminating portaudio");
 
