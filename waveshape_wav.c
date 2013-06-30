@@ -69,7 +69,7 @@ struct waveshape_s * waveshape_wav_create(FILE * fp)
 	fread(&fh, 1, sizeof(fh), fp);
 	fread(&dh, 1, sizeof(dh), fp);
 
-	short * buffer = malloc(sizeof(short) * (dh.chunk_size / 2));
+	short *buffer = malloc(sizeof(short) * (dh.chunk_size / 2));
 	fread(buffer, 1, dh.chunk_size, fp);
 
 	ws->size = dh.chunk_size / 4;
