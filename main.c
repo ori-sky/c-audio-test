@@ -23,7 +23,7 @@ static int callback(const void *input, void *output, unsigned long fpb, const Pa
 
 int main(int argc, char **argv)
 {
-	FILE * fp = fopen("music.wav", "rb");
+	FILE *fp = fopen("music.wav", "rb");
 
 	if(fp == NULL)
 	{

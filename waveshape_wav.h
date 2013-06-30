@@ -3,6 +3,6 @@
 #ifndef WAVESHAPE_WAV_H
 #define WAVESHAPE_WAV_H
 
-extern struct waveshape_s * waveshape_wav_create();
+extern struct waveshape_s * waveshape_wav_create(FILE *);
 
 #endif
