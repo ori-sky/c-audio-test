@@ -9,6 +9,7 @@ struct oscillator_s *oscillator_create(struct waveshape_s *waveshape)
 	struct oscillator_s *osc = malloc(sizeof(struct oscillator_s));
 	osc->waveshape = waveshape;
 	osc->frequency = waveshape->preferred_frequency;
+	osc->speed = 1;
 	osc->position = 0;
 	return osc;
 }
@@ -16,6 +17,7 @@ struct oscillator_s *oscillator_create(struct waveshape_s *waveshape)
 int oscillator_cb(float *buffer, unsigned long frames, struct oscillator_s *osc)
 {
 	float increment = osc->frequency * osc->waveshape->size / SAMPLE_RATE;
+	increment *= osc->speed;
 
 	for(unsigned int i=0; i<frames; ++i)
 	{

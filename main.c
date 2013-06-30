@@ -40,7 +40,23 @@ int main(int argc, char **argv)
 	assert_pa_error(Pa_OpenDefaultStream(&stream, 0, 2, paFloat32, SAMPLE_RATE, FRAMES_PER_BUFFER, callback, NULL), "opening default stream");
 	assert_pa_error(Pa_StartStream(stream), "starting stream");
 
-	fgetc(stdin);
+	for(;;)
+	{
+		char c = fgetc(stdin);
+
+		switch(c)
+		{
+			case '[':
+				osc1->speed -= 0.05f;
+				break;
+			case ']':
+				osc1->speed += 0.05f;
+				break;
+			case 'q':
+				goto end;
+		}
+	}
+end:
 
 	assert_pa_error(Pa_Terminate(), "terminating portaudio");
 

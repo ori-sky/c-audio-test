@@ -7,6 +7,7 @@ struct oscillator_s
 {
 	struct waveshape_s *waveshape;
 	float frequency;
+	float speed;
 	float position;
 };
 
