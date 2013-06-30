@@ -5,6 +5,7 @@
 #include "portaudio.h"
 #include "oscillator.h"
 #include "waveshape_sine.h"
+#include "waveshape_wav.h"
 #include "config.h"
 
 static struct oscillator_s *osc1 = NULL;
@@ -22,7 +23,16 @@ static int callback(const void *input, void *output, unsigned long fpb, const Pa
 
 int main(int argc, char **argv)
 {
-	osc1 = oscillator_create(waveshape_sine_create(8192));
+	FILE * fp = fopen("music.wav", "rb");
+
+	if(fp == NULL)
+	{
+		fprintf(stderr, "failed to load music.wav\n");
+		return -1;
+	}
+
+	//osc1 = oscillator_create(waveshape_sine_create(8192));
+	osc1 = oscillator_create(waveshape_wav_create(fp));
 
 	PaStream *stream;
 
