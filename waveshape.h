@@ -32,7 +32,7 @@ struct waveshape_s
 {
 	unsigned int size;
 	float *buffer;
-	float preferred_frequency;
+	double preferred_frequency;
 	unsigned char interpolate;
 };
 

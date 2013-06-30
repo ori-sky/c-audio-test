@@ -74,12 +74,12 @@ struct waveshape_s * waveshape_wav_create(FILE * fp)
 
 	ws->size = dh.chunk_size / 4;
 	ws->buffer = malloc(sizeof(float) * ws->size);
-	ws->preferred_frequency = (float)fh.sample_rate / (float)ws->size;
+	ws->preferred_frequency = (double)fh.sample_rate / (double)ws->size;
 	ws->interpolate = 0;
 
 	for(unsigned int i=0; i<ws->size; ++i)
 	{
-		ws->buffer[i] = (float)buffer[i * 2] * 2 / 32767.0f;
+		ws->buffer[i] = (double)buffer[i * 2] * 2 / 32767.0f;
 	}
 
 	return ws;

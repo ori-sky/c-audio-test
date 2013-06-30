@@ -33,9 +33,9 @@
 struct oscillator_s
 {
 	struct waveshape_s *waveshape;
-	float frequency;
-	float speed;
-	float position;
+	double frequency;
+	double speed;
+	double position;
 };
 
 extern struct oscillator_s * oscillator_create(struct waveshape_s *waveshape);

@@ -41,7 +41,7 @@ struct waveshape_s * waveshape_sine_create(unsigned int num_points)
 
 	for(unsigned int i=0; i<num_points; ++i)
 	{
-		ws->buffer[i] = sin((float)i * 2.0f * 3.14159265358979f / (float)num_points);
+		ws->buffer[i] = sin((double)i * 2.0f * 3.14159265358979f / (double)num_points);
 	}
 
 	return ws;

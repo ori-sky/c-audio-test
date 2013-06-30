@@ -27,6 +27,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include "portaudio.h"
@@ -50,6 +51,14 @@ static int callback(const void *input, void *output, unsigned long fpb, const Pa
 
 int main(int argc, char **argv)
 {
+	if(argc != 2)
+	{
+		fprintf(stderr, "Usage: audio <increment>\n");
+		return -1;
+	}
+
+	double increment = strtod(argv[1], NULL);
+
 	FILE *fp = fopen("music.wav", "rb");
 
 	if(fp == NULL)
@@ -74,10 +83,10 @@ int main(int argc, char **argv)
 		switch(c)
 		{
 			case '[':
-				osc1->speed -= 0.05f;
+				osc1->speed -= increment;
 				break;
 			case ']':
-				osc1->speed += 0.05f;
+				osc1->speed += increment;
 				break;
 			case 'q':
 				goto end;
