@@ -52,13 +52,12 @@ static int callback(const void *input, void *output, unsigned long fpb, const Pa
 
 int main(int argc, char **argv)
 {
-	if(argc != 2)
-	{
-		fprintf(stderr, "Usage: audio <increment>\n");
-		return -1;
-	}
+	double increment = 0.1f;
 
-	double increment = strtod(argv[1], NULL);
+	if(argc >= 2)
+	{
+		increment = strtod(argv[1], NULL);
+	}
 
 	FILE *fp = fopen("music.wav", "rb");
 
