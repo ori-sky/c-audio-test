@@ -14,7 +14,6 @@
 #include "waveshape_test.h"
 
 struct mixer_s * mixer;
-struct node_s * n;
 
 static unsigned char assert_pa_error(PaError err, const char *msg)
 {
@@ -38,9 +37,15 @@ int main(int argc, char **argv)
 	}
 
 	mixer = mixer_create();
-	n = node_oscillator_create(oscillator_create(waveshape_wav_create(fp)));
-	node_link(&n->outputs[0], &mixer->output_node->inputs[0]);
-	node_link(&n->outputs[0], &mixer->output_node->inputs[1]);
+
+	struct node_s * n_sine = node_oscillator_create(oscillator_create(waveshape_sine_create(512)));
+	struct node_s * n_music = node_oscillator_create(oscillator_create(waveshape_wav_create(fp)));
+
+	((struct oscillator_s *)n_sine->extra)->frequency = 0.2f;
+
+	node_link(&n_sine->outputs[0], &n_music->inputs[0]);
+	node_link(&n_music->outputs[0], &mixer->output_node->inputs[0]);
+	node_link(&n_music->outputs[0], &mixer->output_node->inputs[1]);
 
 	PaStream *stream;
 
