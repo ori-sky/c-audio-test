@@ -12,6 +12,6 @@ struct oscillator_s
 };
 
 extern struct oscillator_s * oscillator_create(struct waveshape_s *waveshape);
-extern int oscillator_cb(float *buffer, unsigned long frames, struct oscillator_s *osc);
+extern float oscillator_cb(struct oscillator_s *osc);
 
 #endif

@@ -10,10 +10,24 @@ struct node_s * node_create(unsigned char num_inputs, unsigned char num_outputs,
 	node->outputs = malloc(sizeof(struct node_output_s) * num_outputs);
 	node->cb = cb;
 	node->extra = NULL;
+
+	unsigned char i;
+
+	for(i=0; i<num_inputs; ++i)
+	{
+		node->inputs[i].node = node;
+	}
+
+	for(i=0; i<num_outputs; ++i)
+	{
+		node->outputs[i].node = node;
+	}
+
 	return node;
 }
 
-void node_link(struct node_output_s *out, struct node_input_s *in)
+int node_link(struct node_output_s *out, struct node_input_s *in)
 {
 	in->input = out;
+	return 0;
 }

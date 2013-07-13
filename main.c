@@ -5,6 +5,7 @@
 
 #include "portaudio.h"
 #include "config.h"
+#include "mixer.h"
 #include "node.h"
 #include "node_oscillator.h"
 
@@ -12,6 +13,7 @@
 #include "waveshape_wav.h"
 #include "waveshape_test.h"
 
+struct mixer_s * mixer;
 struct node_s * n;
 
 static unsigned char assert_pa_error(PaError err, const char *msg)
@@ -22,8 +24,7 @@ static unsigned char assert_pa_error(PaError err, const char *msg)
 
 static int callback(const void *input, void *output, unsigned long fpb, const PaStreamCallbackTimeInfo *time_info, PaStreamCallbackFlags flags, void *user_data)
 {
-	//return n->cb(n);
-	return oscillator_cb(output, fpb, n->extra);
+	return mixer_cb(mixer, output, fpb);
 }
 
 int main(int argc, char **argv)
@@ -36,7 +37,10 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
+	mixer = mixer_create();
 	n = node_oscillator_create(oscillator_create(waveshape_wav_create(fp)));
+	node_link(&n->outputs[0], &mixer->output_node->inputs[0]);
+	node_link(&n->outputs[0], &mixer->output_node->inputs[1]);
 
 	PaStream *stream;
 

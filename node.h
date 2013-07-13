@@ -15,21 +15,24 @@ struct node_s
 	struct node_output_s *outputs;
 	node_callback_t cb;
 	void *extra;
+	unsigned char processed;
 };
 
 struct node_input_s
 {
+	struct node_s *node;
 	struct node_output_s *input;
 	char * id;
 };
 
 struct node_output_s
 {
+	struct node_s *node;
 	float data;
 	char * id;
 };
 
 extern struct node_s * node_create(unsigned char num_inputs, unsigned char num_outputs, node_callback_t cb);
-extern void node_link(struct node_output_s *out, struct node_input_s *in);
+extern int node_link(struct node_output_s *out, struct node_input_s *in);
 
 #endif
