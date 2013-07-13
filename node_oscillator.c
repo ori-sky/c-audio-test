@@ -16,7 +16,7 @@ int node_oscillator_cb(struct node_s *node, unsigned long frames)
 	{
 		if(node->inputs[0].input != NULL)
 		{
-			osc->speed = (node->inputs[0].input->data[frame] + 1) / 2.0f;
+			osc->speed = (node->inputs[0].input->data[frame] + 1) / 2.0f * 0.05f + 0.975f;
 		}
 
 		node->outputs[0].data[frame] = oscillator_cb(osc);

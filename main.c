@@ -53,9 +53,9 @@ int main(int argc, char **argv)
 	struct node_s * n_music = node_oscillator_create(oscillator_create(waveshape_wav_create(fp)));
 	//struct node_s * n_reverb = node_reverb_create(256, 0.5f);
 
-	((struct oscillator_s *)n_sine->extra)->frequency = 1.0f;
+	((struct oscillator_s *)n_sine->extra)->frequency = 10.0f;
 
-	//node_link(&n_sine->outputs[0], &n_music->inputs[0]);
+	node_link(&n_sine->outputs[0], &n_music->inputs[0]);
 	//node_link(&n_music->outputs[0], &n_reverb->inputs[0]);
 	node_link(&n_music->outputs[0], &mixer->output_node->inputs[0]);
 	node_link(&n_music->outputs[0], &mixer->output_node->inputs[1]);
