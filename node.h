@@ -1,11 +1,13 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include "config.h"
+
 struct node_s;
 struct node_input_s;
 struct node_output_s;
 
-typedef int (*node_callback_t)(struct node_s *);
+typedef int (*node_callback_t)(struct node_s *, unsigned long);
 
 struct node_s
 {
@@ -28,7 +30,7 @@ struct node_input_s
 struct node_output_s
 {
 	struct node_s *node;
-	float data;
+	float data[FRAMES_PER_BUFFER];
 	char * id;
 };
 

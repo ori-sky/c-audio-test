@@ -5,6 +5,6 @@
 #include "oscillator.h"
 
 extern struct node_s * node_oscillator_create(struct oscillator_s *osc);
-extern int node_oscillator_cb(struct node_s *node);
+extern int node_oscillator_cb(struct node_s *node, unsigned long frames);
 
 #endif

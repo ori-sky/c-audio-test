@@ -8,16 +8,19 @@ struct node_s * node_oscillator_create(struct oscillator_s *osc)
 	return node;
 }
 
-int node_oscillator_cb(struct node_s *node)
+int node_oscillator_cb(struct node_s *node, unsigned long frames)
 {
 	struct oscillator_s *osc = node->extra;
 
-	if(node->inputs[0].input != NULL)
+	for(unsigned long frame=0; frame<frames; ++frame)
 	{
-		osc->speed = (node->inputs[0].input->data + 1) / 2.0f;
-	}
+		if(node->inputs[0].input != NULL)
+		{
+			osc->speed = (node->inputs[0].input->data[frame] + 1) / 2.0f;
+		}
 
-	node->outputs[0].data = oscillator_cb(osc);
+		node->outputs[0].data[frame] = oscillator_cb(osc);
+	}
 
 	return 0;
 }

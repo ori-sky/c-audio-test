@@ -11,7 +11,7 @@ struct mixer_s * mixer_create(void)
 
 int mixer_cb(struct mixer_s *mixer, float *output_buffer, unsigned long frames)
 {
-	for(unsigned long frame=0; frame<frames; ++frame)
+	/*for(unsigned long frame=0; frame<frames; ++frame)
 	{
 		mixer_unprocess_node(mixer->output_node);
 		mixer_process_node(mixer->output_node);
@@ -19,12 +19,16 @@ int mixer_cb(struct mixer_s *mixer, float *output_buffer, unsigned long frames)
 		float *extra = mixer->output_node->extra;
 		output_buffer[frame * 2 + 0] = extra[0];
 		output_buffer[frame * 2 + 1] = extra[1];
-	}
+	}*/
+
+	mixer_unprocess_node(mixer->output_node);
+	mixer->output_node->extra = output_buffer;
+	mixer_process_node(mixer->output_node, frames);
 
 	return 0;
 }
 
-int mixer_process_node(struct node_s *node)
+int mixer_process_node(struct node_s *node, unsigned long frames)
 {
 	if(node->processed == 0)
 	{
@@ -32,11 +36,11 @@ int mixer_process_node(struct node_s *node)
 		{
 			if(node->inputs[i].input != NULL)
 			{
-				mixer_process_node(node->inputs[i].input->node);
+				mixer_process_node(node->inputs[i].input->node, frames);
 			}
 		}
 
-		node->cb(node);
+		node->cb(node, frames);
 		node->processed = 1;
 	}
 
@@ -58,15 +62,14 @@ int mixer_unprocess_node(struct node_s *node)
 
 }
 
-int mixer_output_node_cb(struct node_s *node)
+int mixer_output_node_cb(struct node_s *node, unsigned long frames)
 {
 	float *extra = node->extra;
-
-	if(node->inputs[0].input != NULL) extra[0] = node->inputs[0].input->data;
-	else extra[0] = 0.01f;
-
-	if(node->inputs[1].input != NULL) extra[1] = node->inputs[1].input->data;
-	else extra[1] = 0.01f;
+	for(unsigned long frame=0; frame<frames; ++frame)
+	{
+		extra[frame * 2 + 0] = node->inputs[0].input->data[frame];
+		extra[frame * 2 + 1] = node->inputs[1].input->data[frame];
+	}
 
 	return 0;
 }
