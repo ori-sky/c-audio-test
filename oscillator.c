@@ -9,6 +9,7 @@ struct oscillator_s *oscillator_create(struct waveshape_s *waveshape)
 	struct oscillator_s *osc = malloc(sizeof(struct oscillator_s));
 	osc->waveshape = waveshape;
 	osc->frequency = waveshape->preferred_frequency;
+	osc->amplitude = 1;
 	osc->speed = 1;
 	osc->position = 0;
 	return osc;
@@ -30,5 +31,5 @@ float oscillator_cb(struct oscillator_s *osc)
 	for(; osc->position >= osc->waveshape->size;) osc->position -= osc->waveshape->size;
 	for(; osc->position < 0;) osc->position += osc->waveshape->size;
 
-	return y1;
+	return y1 * osc->amplitude;
 }
